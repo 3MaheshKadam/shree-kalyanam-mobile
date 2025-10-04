@@ -34,53 +34,40 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const BASE_URL = "https://shiv-bandhan-testing.vercel.app/";
 
-// Enhanced Color Palette with Modern Design System
+// Enhanced Color Palette with Modern Design System - Same as InterestsScreen
 const COLORS = {
-  // Primary colors - Romantic red & pink tones
-  primary: "#E91E63",        // Deep rose pink - passion & love
-  primaryLight: "#F48FB1",   // Soft blush pink
-  primaryDark: "#C2185B",    // Dark rose
-
-  // Secondary colors - Complementary warm reds
-  secondary: "#F44336",      // Vibrant romantic red
-  secondaryLight: "#FF7961", // Light coral red
-  secondaryDark: "#D32F2F",  // Deep red
-
-  // Accent colors - Highlight romance
-  accent: "#FF1744",         // Bright romantic red
-  accentSecondary: "#FF4081",// Lively pink accent
-  gold: "#FFB300",           // Warm gold (celebration)
-
-  // Status colors
-  success: "#4CAF50",        // Harmony (green)
-  warning: "#FF9800",        // Warm orange
-  error: "#D32F2F",          // Strong error red
-  inactive: "#BDBDBD",       // Neutral gray
-
-  // Neutral palette - Soft romantic neutrals
-  background: "#FFFFFF",     // Very soft blush background
-  surface: "#FFFFFF",        // Light romantic surface
-  surfaceVariant: "#FFFFFF", // Slightly deeper pinkish surface
-  outline: "#F8BBD0",        // Light pink border
-  outlineVariant: "#E57373", // Soft rose border
-
-  // Text colors
-  onSurface: "#3D3D3D",        // Almost black
-  onSurfaceVariant: "#6D4C41", // Warm brown-gray (romantic)
-  onSurfaceMuted: "#A1887F",   // Muted warm tone
-
-  // Semantic containers
-  surfaceContainer: "#FFEFF3",
-  surfaceContainerLow: "#FFF7F9",
+  primary: "#f87171", // red-400
+  primaryLight: "#fca5a5", // red-300
+  primaryDark: "#dc2626", // red-600
+  secondary: "#ef4444", // red-500
+  secondaryLight: "#fca5a5", // red-300
+  secondaryDark: "#b91c1c", // red-700
+  accent: "#dc2626", // red-600
+  accentSecondary: "#f87171", // red-400
+  gold: "#FFB300",
+  success: "#10b981", // Keep green for success states
+  warning: "#f59e0b",
+  error: "#dc2626", // red-600
+  inactive: "#BDBDBD",
+  background: "#FFFFFF",
+  surface: "#FFFFFF",
+  surfaceVariant: "#FFFFFF",
+  outline: "#fecaca", // red-200
+  outlineVariant: "#fca5a5", // red-300
+  onSurface: "#3D3D3D",
+  onSurfaceVariant: "#6D4C41",
+  onSurfaceMuted: "#A1887F",
+  surfaceContainer: "#fef2f2", // red-50
+  surfaceContainerLow: "#fff5f5",
   surfaceContainerHigh: "#FFFFFF",
-  surfaceContainerHighest: "#F8BBD0",
-
-  // Gradients - Romantic blends
-  gradientPrimary: ["#E91E63", "#F06292"],     // Pink gradient
-  gradientSecondary: ["#F44336", "#E91E63"],   // Red to rose gradient
-  gradientSurface: ["#FFFFFF", "#FFFFFF"],     // Soft blush gradient
-  gradientCard: ["#FFFFFF", "#FFF5F7"],        // White to soft pink
-  gradientGold: ["#FFD740", "#FFB300"],        // Golden accents
+  surfaceContainerHighest: "#fee2e2", // red-100
+  gradientPrimary: ["#f87171", "#dc2626"], // red-400 to red-600
+  gradientSecondary: ["#ef4444", "#dc2626"], // red-500 to red-600
+  gradientSurface: ["#FFFFFF", "#FFFFFF"],
+  gradientCard: ["#FFFFFF", "#fef2f2"], // white to red-50
+  gradientGold: ["#FFD740", "#FFB300"],
+  gradientError: ["#ef4444", "#dc2626"], // red gradient
+  gradientSuccess: ["#4CAF50", "#45a049"],
 };
 
 const MatchesScreen = () => {
@@ -95,9 +82,9 @@ const MatchesScreen = () => {
   const [hasSubscription, setHasSubscription] = useState(true);
   const [checkingSubscription, setCheckingSubscription] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-   const [showSearchBar, setShowSearchBar] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const searchAnim = useRef(new Animated.Value(0)).current;
-    const buttonScale = useRef(new Animated.Value(1)).current;
+  const buttonScale = useRef(new Animated.Value(1)).current;
   const [quickFilters, setQuickFilters] = useState({
     withPhoto: null,
     verified: null,
@@ -462,287 +449,278 @@ const MatchesScreen = () => {
   });
 
   // Enhanced Modern Header Component
-const renderHeader = () => {
-  const toggleSearchBar = () => {
-    setShowSearchBar(!showSearchBar);
-    Animated.timing(searchAnim, {
-      toValue: showSearchBar ? 0 : 1,
-      duration: 400,
-      useNativeDriver: true,
-      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-    }).start();
-  };
-
-  const searchBarStyle = {
-    opacity: searchAnim,
-    transform: [
-      {
-        translateY: searchAnim.interpolate({
-          inputRange: [0, 1],
-          outputRange: [-30, 0],
-        }),
-      },
-      {
-        scale: searchAnim.interpolate({
-          inputRange: [0, 1],
-          outputRange: [0.95, 1],
-        }),
-      },
-    ],
-  };
-
-
-  const handleButtonPress = (callback) => {
-    Animated.sequence([
-      Animated.timing(buttonScale, {
-        toValue: 0.95,
-        duration: 100,
+  const renderHeader = () => {
+    const toggleSearchBar = () => {
+      setShowSearchBar(!showSearchBar);
+      Animated.timing(searchAnim, {
+        toValue: showSearchBar ? 0 : 1,
+        duration: 400,
         useNativeDriver: true,
-      }),
-      Animated.timing(buttonScale, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-    ]).start();
-    callback();
-  };
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      }).start();
+    };
 
-  return (
-    <Animated.View
-      style={{
-       
-        opacity: headerOpacity,
-      }}
-    >
-      {/* Enhanced gradient with blur effect backdrop */}
-      <LinearGradient
-        colors={COLORS.gradientSurface}
+    const searchBarStyle = {
+      opacity: searchAnim,
+      transform: [
+        {
+          translateY: searchAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [-30, 0],
+          }),
+        },
+        {
+          scale: searchAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0.95, 1],
+          }),
+        },
+      ],
+    };
+
+    const handleButtonPress = (callback) => {
+      Animated.sequence([
+        Animated.timing(buttonScale, {
+          toValue: 0.95,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonScale, {
+          toValue: 1,
+          duration: 100,
+          useNativeDriver: true,
+        }),
+      ]).start();
+      callback();
+    };
+
+    return (
+      <Animated.View
         style={{
-          paddingTop: Platform.OS === 'ios' ? 60 : (StatusBar.currentHeight || 0) + 10,
-          paddingBottom: 20,
-          borderBottomWidth: 1,
-          borderBottomColor: COLORS.outline,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 8,
-          elevation: 4,
+          opacity: headerOpacity,
         }}
       >
-        <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
-        
-        {/* Main header content */}
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          marginBottom: showSearchBar ? 20 : 12,
-          paddingHorizontal: 24,
-          paddingVertical: 8,
-        }}>
+        {/* Enhanced gradient with blur effect backdrop */}
+        <LinearGradient
+          colors={COLORS.gradientSurface}
+          style={{
+            paddingTop: Platform.OS === 'ios' ? 60 : (StatusBar.currentHeight || 0) + 10,
+            paddingBottom: 20,
+            borderBottomWidth: 1,
+            borderBottomColor: COLORS.outline,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 8,
+            elevation: 4,
+          }}
+        >
+          <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
           
-          {/* Title section with enhanced typography */}
-          <View style={{ flex: 1, paddingRight: 16 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
-              <Text style={{
-                fontSize: 32,
-                fontWeight: '800',
-                color: COLORS.onSurface,
-                letterSpacing: -1.2,
-                lineHeight: 38,
-                fontFamily: Platform.OS === 'ios' ? 'San Francisco' : 'Roboto',
-              }}>
-                Discover
-              </Text>
-              <View style={{
-                width: 6,
-                height: 6,
-                borderRadius: 3,
-                backgroundColor: COLORS.accent,
-                marginLeft: 8,
-                marginTop: 4,
-              }} />
-            </View>
-            
-            <Text style={{
-              fontSize: 14,
-              color: COLORS.onSurfaceVariant,
-              fontWeight: '500',
-              letterSpacing: 0.2,
-              fontFamily: Platform.OS === 'ios' ? 'San Francisco' : 'Roboto',
-              lineHeight: 20,
-            }}>
-              Find your perfect match
-            </Text>
-            
-            {/* Subtle progress indicator */}
-            <View style={{
-              height: 2,
-              backgroundColor: 'rgba(99, 102, 241, 0.1)',
-              borderRadius: 1,
-              marginTop: 8,
-              width: '60%',
-            }}>
-              <View style={{
-                height: 2,
-                backgroundColor: '#E91E63',
-                borderRadius: 1,
-                width: '40%',
-              }} />
-            </View>
-          </View>
-          
-          {/* Action buttons with enhanced design */}
-          <View style={{ 
-            flexDirection: 'row', 
-            gap: 12,
-            alignItems: 'center',
+          {/* Main header content */}
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            marginBottom: showSearchBar ? 20 : 12,
+            paddingHorizontal: 24,
+            paddingVertical: 8,
           }}>
             
-            {/* Filter button */}
-            <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
-              <LinearGradient 
-                colors={COLORS.gradientPrimary}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{
-                  borderRadius: 16,
-                  padding: 14,
-                  shadowColor: COLORS.primary,
-                  shadowOffset: { width: 0, height: 4 },
-                  shadowOpacity: 0.3,
-                  shadowRadius: 8,
-                  elevation: 6,
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => handleButtonPress(() => setShowQuickFilters(true))}
-                  activeOpacity={0.8}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <Ionicons name="options-outline" size={20} color="#ffffff" />
-                  <View style={{
-                    position: 'absolute',
-                    top: -2,
-                    right: -2,
-                    width: 8,
-                    height: 8,
-                    borderRadius: 4,
-                    backgroundColor: COLORS.accent,
-                    borderWidth: 2,
-                    borderColor: '#ffffff',
-                  }} />
-                </TouchableOpacity>
-              </LinearGradient>
-            </Animated.View>
-
-            {/* Search toggle button */}
-            <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
-              <View style={{
-                backgroundColor: showSearchBar ? COLORS.onSurface : COLORS.surface,
-                borderRadius: 16,
-                padding: 14,
-                borderWidth: 1,
-                borderColor: showSearchBar ? COLORS.onSurface : COLORS.outline,
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: showSearchBar ? 0.2 : 0.05,
-                shadowRadius: 6,
-                elevation: 3,
-              }}>
-                <TouchableOpacity
-                  onPress={() => handleButtonPress(toggleSearchBar)}
-                  activeOpacity={0.8}
-                >
-                  <Ionicons 
-                    name={showSearchBar ? "close" : "search"} 
-                    size={20} 
-                    color={showSearchBar ? COLORS.surface : COLORS.onSurfaceVariant} 
-                  />
-                </TouchableOpacity>
+            {/* Title section with enhanced typography */}
+            <View style={{ flex: 1, paddingRight: 16 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
+                <Text style={{
+                  fontSize: 32,
+                  fontWeight: '800',
+                  color: COLORS.onSurface,
+                  letterSpacing: -1.2,
+                  lineHeight: 38,
+                }}>
+                  Discover
+                </Text>
+                <View style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: 3,
+                  backgroundColor: COLORS.accent,
+                  marginLeft: 8,
+                  marginTop: 4,
+                }} />
               </View>
-            </Animated.View>
-          </View>
-        </View>
-
-        {/* Enhanced search bar */}
-        {showSearchBar && (
-          <Animated.View style={[{
-            backgroundColor: COLORS.surface,
-            borderRadius: 24,
-            paddingHorizontal: 20,
-            paddingVertical: 8,
-            marginHorizontal: 24,
-            marginBottom: 8,
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 12,
-            borderWidth: 1,
-            borderColor: COLORS.outline,
-            shadowColor: COLORS.primary,
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.08,
-            shadowRadius: 12,
-            elevation: 6,
-          }, searchBarStyle]}>
-            
-            <View style={{
-              backgroundColor: COLORS.surfaceContainerLow,
-              borderRadius: 10,
-              padding: 8,
-            }}>
-              <Ionicons name="search" size={18} color={COLORS.primary} />
+              
+              <Text style={{
+                fontSize: 14,
+                color: COLORS.onSurfaceVariant,
+                fontWeight: '500',
+                letterSpacing: 0.2,
+                lineHeight: 20,
+              }}>
+                Find your perfect match
+              </Text>
+              
+              {/* Subtle progress indicator */}
+              <View style={{
+                height: 2,
+                backgroundColor: 'rgba(233, 30, 99, 0.1)',
+                borderRadius: 1,
+                marginTop: 8,
+                width: '60%',
+              }}>
+                <View style={{
+                  height: 2,
+                  backgroundColor: COLORS.primary,
+                  borderRadius: 1,
+                  width: '40%',
+                }} />
+              </View>
             </View>
             
-            <TextInput
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              placeholder="Search by city, profession, interests..."
-              placeholderTextColor={COLORS.onSurfaceMuted}
-              style={{
-                flex: 1,
-                fontSize: 16,
-                color: COLORS.onSurface,
-                fontWeight: '500',
-                fontFamily: Platform.OS === 'ios' ? 'San Francisco' : 'Roboto',
-                lineHeight: 20,
-              }}
-              autoFocus={showSearchBar}
-              returnKeyType="search"
-            />
-            
-            {searchQuery.length > 0 && (
-              <TouchableOpacity 
-                onPress={() => setSearchQuery('')}
-                activeOpacity={0.7}
-                style={{
-                  backgroundColor: COLORS.surfaceContainer,
-                  borderRadius: 10,
-                  padding: 6,
-                }}
-              >
-                <Ionicons name="close" size={16} color={COLORS.onSurfaceVariant} />
-              </TouchableOpacity>
-            )}
-          </Animated.View>
-        )}
+            {/* Action buttons with enhanced design */}
+            <View style={{ 
+              flexDirection: 'row', 
+              gap: 12,
+              alignItems: 'center',
+            }}>
+              
+              {/* Filter button */}
+              <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
+                <LinearGradient 
+                  colors={COLORS.gradientPrimary}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={{
+                    borderRadius: 16,
+                    padding: 14,
+                    shadowColor: COLORS.primary,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 8,
+                    elevation: 6,
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => handleButtonPress(() => setShowQuickFilters(true))}
+                    activeOpacity={0.8}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Ionicons name="options-outline" size={20} color="#ffffff" />
+                    <View style={{
+                      position: 'absolute',
+                      top: -2,
+                      right: -2,
+                      width: 8,
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: COLORS.accent,
+                      borderWidth: 2,
+                      borderColor: '#ffffff',
+                    }} />
+                  </TouchableOpacity>
+                </LinearGradient>
+              </Animated.View>
 
-        
-      </LinearGradient>
-    </Animated.View>
-  );
-};
+              {/* Search toggle button */}
+              <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
+                <View style={{
+                  backgroundColor: showSearchBar ? COLORS.onSurface : COLORS.surface,
+                  borderRadius: 16,
+                  padding: 14,
+                  borderWidth: 1,
+                  borderColor: showSearchBar ? COLORS.onSurface : COLORS.outline,
+                  shadowColor: '#000',
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: showSearchBar ? 0.2 : 0.05,
+                  shadowRadius: 6,
+                  elevation: 3,
+                }}>
+                  <TouchableOpacity
+                    onPress={() => handleButtonPress(toggleSearchBar)}
+                    activeOpacity={0.8}
+                  >
+                    <Ionicons 
+                      name={showSearchBar ? "close" : "search"} 
+                      size={20} 
+                      color={showSearchBar ? COLORS.surface : COLORS.onSurfaceVariant} 
+                    />
+                  </TouchableOpacity>
+                </View>
+              </Animated.View>
+            </View>
+          </View>
+
+          {/* Enhanced search bar */}
+          {showSearchBar && (
+            <Animated.View style={[{
+              backgroundColor: COLORS.surface,
+              borderRadius: 24,
+              paddingHorizontal: 20,
+              paddingVertical: 8,
+              marginHorizontal: 24,
+              marginBottom: 8,
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 12,
+              borderWidth: 1,
+              borderColor: COLORS.outline,
+              shadowColor: COLORS.primary,
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.08,
+              shadowRadius: 12,
+              elevation: 6,
+            }, searchBarStyle]}>
+              
+              <View style={{
+                backgroundColor: COLORS.surfaceContainerLow,
+                borderRadius: 10,
+                padding: 8,
+              }}>
+                <Ionicons name="search" size={18} color={COLORS.primary} />
+              </View>
+              
+              <TextInput
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                placeholder="Search by city, profession, interests..."
+                placeholderTextColor={COLORS.onSurfaceMuted}
+                style={{
+                  flex: 1,
+                  fontSize: 16,
+                  color: COLORS.onSurface,
+                  fontWeight: '500',
+                  lineHeight: 20,
+                }}
+                autoFocus={showSearchBar}
+                returnKeyType="search"
+              />
+              
+              {searchQuery.length > 0 && (
+                <TouchableOpacity 
+                  onPress={() => setSearchQuery('')}
+                  activeOpacity={0.7}
+                  style={{
+                    backgroundColor: COLORS.surfaceContainer,
+                    borderRadius: 10,
+                    padding: 6,
+                  }}
+                >
+                  <Ionicons name="close" size={16} color={COLORS.onSurfaceVariant} />
+                </TouchableOpacity>
+              )}
+            </Animated.View>
+          )}
+        </LinearGradient>
+      </Animated.View>
+    );
+  };
 
   // Modern Tab Bar Component
   const renderTabBar = () => (
-    <Animated.View
-     
-    >
+    <Animated.View>
       <View style={{
         backgroundColor: COLORS.background,
       }}>
@@ -752,7 +730,7 @@ const renderHeader = () => {
           contentContainerStyle={{ 
             paddingHorizontal: 12,
             paddingBottom: 12,
-            paddingTop:12,
+            paddingTop: 12,
             gap: 10,
           }}
         >
@@ -1134,581 +1112,578 @@ const renderHeader = () => {
   );
 
   // Enhanced Profile Detail Modal
-const renderProfileDetailModal = () => (
-  <Modal
-    visible={!!selectedProfile}
-    animationType="slide"
-    presentationStyle="pageSheet"
-    onRequestClose={() => setSelectedProfile(null)}
-  >
-    {selectedProfile && (
-      <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
-        <StatusBar barStyle="dark-content" />
-        
-        {/* Modern Header with Subtle Glass Effect */}
-        <View style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 10,
-          backgroundColor: 'rgba(255, 255, 255, 0.95)',
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.05,
-          shadowRadius: 10,
-          elevation: 4,
-        }}>
+  const renderProfileDetailModal = () => (
+    <Modal
+      visible={!!selectedProfile}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={() => setSelectedProfile(null)}
+    >
+      {selectedProfile && (
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
+          <StatusBar barStyle="dark-content" />
+          
+          {/* Modern Header with Subtle Glass Effect */}
           <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingHorizontal: 24,
-            paddingVertical: 16,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 10,
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.05,
+            shadowRadius: 10,
+            elevation: 4,
           }}>
-            <Text style={{
-              fontSize: 20,
-              fontWeight: '700',
-              color: COLORS.onSurface,
-              letterSpacing: -0.3,
-            }}>
-              Profile Details
-            </Text>
-            
-            <TouchableOpacity
-              onPress={() => setSelectedProfile(null)}
-              activeOpacity={0.7}
-              style={{
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                borderRadius: 12,
-                padding: 8,
-              }}
-            >
-              <Ionicons name="close" size={20} color={COLORS.onSurfaceVariant} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <ScrollView 
-          style={{ flex: 1 }}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingTop: 80 }}
-        >
-          {/* Elegant Hero Section */}
-          <View style={{
-            position: 'relative',
-            width: '100%',
-            height: 360,
-            marginBottom: 16,
-          }}>
-            {/* Profile Image Container with Subtle Shadow */}
             <View style={{
-              margin: 20,
-              borderRadius: 24,
-              overflow: 'hidden',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 12 },
-              shadowOpacity: 0.15,
-              shadowRadius: 20,
-              elevation: 10,
-              height: '100%',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingHorizontal: 24,
+              paddingVertical: 16,
             }}>
-              <Image
-                source={{ uri: selectedProfile.profilePhoto }}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  resizeMode: 'cover',
-                }}
-              />
+              <Text style={{
+                fontSize: 20,
+                fontWeight: '700',
+                color: COLORS.onSurface,
+                letterSpacing: -0.3,
+              }}>
+                Profile Details
+              </Text>
               
-              {selectedProfile.isBlurred && (
-                <View style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: 'rgba(255, 255, 255, 0.85)',
-                }}>
-                  <View style={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                    borderRadius: 20,
-                    padding: 16,
-                  }}>
-                    <Ionicons name="lock-closed" size={40} color={COLORS.onSurface} />
-                  </View>
-                </View>
-              )}
-            </View>
-            
-            {/* Compatibility Badge */}
-            <View style={{
-              position: 'absolute',
-              top: 36,
-              right: 36,
-              backgroundColor: '#FFF',
-              borderRadius: 16,
-              padding: 2,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.1,
-              shadowRadius: 8,
-              elevation: 3,
-            }}>
-              <LinearGradient
-                colors={getCompatibilityColor(selectedProfile.compatibility)}
+              <TouchableOpacity
+                onPress={() => setSelectedProfile(null)}
+                activeOpacity={0.7}
                 style={{
-                  borderRadius: 14,
-                  paddingHorizontal: 14,
-                  paddingVertical: 8,
-                  minWidth: 90,
-                  alignItems: 'center',
+                  backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                  borderRadius: 12,
+                  padding: 8,
                 }}
               >
-                <Text style={{
-                  fontSize: 12,
-                  fontWeight: '800',
-                  color: '#FFF',
-                  letterSpacing: 0.5,
-                }}>
-                  {selectedProfile.compatibility}% Match
-                </Text>
-              </LinearGradient>
+                <Ionicons name="close" size={20} color={COLORS.onSurfaceVariant} />
+              </TouchableOpacity>
             </View>
+          </View>
 
-            {/* Verification Badge */}
-            {selectedProfile.isVerified && (
+          <ScrollView 
+            style={{ flex: 1 }}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingTop: 80 }}
+          >
+            {/* Elegant Hero Section */}
+            <View style={{
+              position: 'relative',
+              width: '100%',
+              height: 360,
+              marginBottom: 16,
+            }}>
+              {/* Profile Image Container with Subtle Shadow */}
+              <View style={{
+                margin: 20,
+                borderRadius: 24,
+                overflow: 'hidden',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 12 },
+                shadowOpacity: 0.15,
+                shadowRadius: 20,
+                elevation: 10,
+                height: '100%',
+              }}>
+                <Image
+                  source={{ uri: selectedProfile.profilePhoto }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    resizeMode: 'cover',
+                  }}
+                />
+                
+                {selectedProfile.isBlurred && (
+                  <View style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                  }}>
+                    <View style={{
+                      backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                      borderRadius: 20,
+                      padding: 16,
+                    }}>
+                      <Ionicons name="lock-closed" size={40} color={COLORS.onSurface} />
+                    </View>
+                  </View>
+                )}
+              </View>
+              
+              {/* Compatibility Badge */}
               <View style={{
                 position: 'absolute',
-                bottom: 36,
+                top: 36,
                 right: 36,
                 backgroundColor: '#FFF',
                 borderRadius: 16,
-                padding: 8,
-                shadowColor: COLORS.success,
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.2,
-                shadowRadius: 4,
+                padding: 2,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.1,
+                shadowRadius: 8,
                 elevation: 3,
               }}>
-                <Ionicons name="checkmark-circle" size={22} color={COLORS.success} />
-              </View>
-            )}
-
-            {/* Name and Details Card */}
-            <View style={{
-              position: 'absolute',
-              bottom: 36,
-              left: 36,
-              right: 100,
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              borderRadius: 16,
-              padding: 12,
-            }}>
-              <Text style={{
-                fontSize: 18,
-                fontWeight: '700',
-                color: '#FFF',
-                marginBottom: 6,
-              }}>
-                {hasSubscription ? selectedProfile.name : maskFirstName(selectedProfile.name)}
-              </Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 12 }}>
-                  <Ionicons name="calendar-outline" size={14} color="rgba(255,255,255,0.8)" />
-                  <Text style={{
-                    fontSize: 12,
-                    color: 'rgba(255,255,255,0.9)',
-                    fontWeight: '500',
-                    marginLeft: 4,
-                  }}>
-                    {selectedProfile.age} years
-                  </Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Ionicons name="location-outline" size={14} color="rgba(255,255,255,0.8)" />
-                  <Text style={{
-                    fontSize: 12,
-                    color: 'rgba(255,255,255,0.9)',
-                    fontWeight: '500',
-                    marginLeft: 4,
-                  }}>
-                    {selectedProfile.currentCity}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          {/* Content Sections */}
-          <View style={{ paddingHorizontal: 20, paddingBottom: 40 ,paddingTop:10}}>
-            {/* Basic Information */}
-            <View style={{
-              backgroundColor: '#FFF',
-              borderRadius: 16,
-              marginBottom: 16,
-              overflow: 'hidden',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 0.05,
-              shadowRadius: 5,
-              elevation: 2,
-            }}>
-              <TouchableOpacity
-                onPress={() => toggleSection('basic')}
-                activeOpacity={0.8}
-                style={{
-                  padding: 20,
-                }}
-              >
-                <View style={{ 
-                  flexDirection: 'row', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{
-                      backgroundColor: `${COLORS.primary}15`,
-                      borderRadius: 12,
-                      padding: 10,
-                      marginRight: 12,
-                    }}>
-                      <Ionicons name="person-outline" size={20} color={COLORS.primary} />
-                    </View>
-                    <Text style={{
-                      fontSize: 17,
-                      fontWeight: '600',
-                      color: COLORS.onSurface,
-                    }}>
-                      Basic Information
-                    </Text>
-                  </View>
-                  <Ionicons 
-                    name={expandedSections.basic ? "chevron-up" : "chevron-down"} 
-                    size={20} 
-                    color={COLORS.onSurfaceVariant} 
-                  />
-                </View>
-
-                {expandedSections.basic && (
-                  <View style={{ 
-                    gap: 12,
-                    marginTop: 16,
-                    paddingTop: 16,
-                    borderTopWidth: 1,
-                    borderTopColor: 'rgba(0, 0, 0, 0.06)',
-                  }}>
-                    <InfoRow label="Age" value={`${selectedProfile.age} years`} />
-                    <InfoRow label="Location" value={selectedProfile.currentCity} />
-                    <InfoRow label="Education" value={selectedProfile.education} />
-                    <InfoRow label="Caste" value={selectedProfile.caste} />
-                    <InfoRow label="Last Active" value={selectedProfile.lastActive} />
-                  </View>
-                )}
-              </TouchableOpacity>
-            </View>
-
-            {/* Professional Section */}
-            <View style={{
-              backgroundColor: '#FFF',
-              borderRadius: 16,
-              marginBottom: 16,
-              overflow: 'hidden',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 0.05,
-              shadowRadius: 5,
-              elevation: 2,
-            }}>
-              <TouchableOpacity
-                onPress={() => toggleSection('professional')}
-                activeOpacity={0.8}
-                style={{
-                  padding: 20,
-                }}
-              >
-                <View style={{ 
-                  flexDirection: 'row', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{
-                      backgroundColor: `${COLORS.secondary}15`,
-                      borderRadius: 12,
-                      padding: 10,
-                      marginRight: 12,
-                    }}>
-                      <Ionicons name="briefcase-outline" size={20} color={COLORS.secondary} />
-                    </View>
-                    <Text style={{
-                      fontSize: 17,
-                      fontWeight: '600',
-                      color: COLORS.onSurface,
-                    }}>
-                      Professional
-                    </Text>
-                  </View>
-                  <Ionicons 
-                    name={expandedSections.professional ? "chevron-up" : "chevron-down"} 
-                    size={20} 
-                    color={COLORS.onSurfaceVariant} 
-                  />
-                </View>
-
-                {expandedSections.professional && (
-                  <View style={{ 
-                    gap: 12,
-                    marginTop: 16,
-                    paddingTop: 16,
-                    borderTopWidth: 1,
-                    borderTopColor: 'rgba(0, 0, 0, 0.06)',
-                  }}>
-                    <InfoRow label="Occupation" value={selectedProfile.occupation || "Not specified"} />
-                    <InfoRow label="Company" value={selectedProfile.company || "Not specified"} />
-                    <InfoRow label="Annual Income" value={selectedProfile.annualIncome || "Not specified"} />
-                  </View>
-                )}
-              </TouchableOpacity>
-            </View>
-
-            {/* Family Section */}
-            <View style={{
-              backgroundColor: '#FFF',
-              borderRadius: 16,
-              marginBottom: 16,
-              overflow: 'hidden',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 0.05,
-              shadowRadius: 5,
-              elevation: 2,
-            }}>
-              <TouchableOpacity
-                onPress={() => toggleSection('family')}
-                activeOpacity={0.8}
-                style={{
-                  padding: 20,
-                }}
-              >
-                <View style={{ 
-                  flexDirection: 'row', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{
-                      backgroundColor: `${COLORS.accent}15`,
-                      borderRadius: 12,
-                      padding: 10,
-                      marginRight: 12,
-                    }}>
-                      <Ionicons name="people-outline" size={20} color={COLORS.accent} />
-                    </View>
-                    <Text style={{
-                      fontSize: 17,
-                      fontWeight: '600',
-                      color: COLORS.onSurface,
-                    }}>
-                      Family
-                    </Text>
-                  </View>
-                  <Ionicons 
-                    name={expandedSections.family ? "chevron-up" : "chevron-down"} 
-                    size={20} 
-                    color={COLORS.onSurfaceVariant} 
-                  />
-                </View>
-
-                {expandedSections.family && (
-                  <View style={{ 
-                    gap: 12,
-                    marginTop: 16,
-                    paddingTop: 16,
-                    borderTopWidth: 1,
-                    borderTopColor: 'rgba(0, 0, 0, 0.06)',
-                  }}>
-                    <InfoRow label="Father Name" value={selectedProfile.fatherName || "Not specified"} />
-                    <InfoRow label="Mother Name" value={selectedProfile.mother || "Not specified"} />
-                    <InfoRow label="Siblings" value={selectedProfile.motherOccupation || "Not specified"} />
-                    <InfoRow label="Brother" value={selectedProfile.brothers || "Not specified"} />
-                    <InfoRow label="Sisters" value={selectedProfile.sisters || "Not specified"} />
-                  </View>
-                )}
-              </TouchableOpacity>
-            </View>
-                {/* HOROSCOPE SECTION */}
-                 <View style={{
-              backgroundColor: '#FFF',
-              borderRadius: 16,
-              marginBottom: 16,
-              overflow: 'hidden',
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 0.05,
-              shadowRadius: 5,
-              elevation: 2,
-            }}>
-              <TouchableOpacity
-                onPress={() => toggleSection('horoscope')}
-                activeOpacity={0.8}
-                style={{
-                  padding: 20,
-                }}
-              >
-                <View style={{ 
-                  flexDirection: 'row', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <View style={{
-                      backgroundColor: `${COLORS.accent}15`,
-                      borderRadius: 12,
-                      padding: 10,
-                      marginRight: 12,
-                    }}>
-                      <Ionicons name="people-outline" size={20} color={COLORS.accent} />
-                    </View>
-                    <Text style={{
-                      fontSize: 17,
-                      fontWeight: '600',
-                      color: COLORS.onSurface,
-                    }}>
-                      Horoscope 
-                    </Text>
-                  </View>
-                  <Ionicons 
-                    name={expandedSections.family ? "chevron-up" : "chevron-down"} 
-                    size={20} 
-                    color={COLORS.onSurfaceVariant} 
-                  />
-                </View>
-
-                {expandedSections.family && (
-                  <View style={{ 
-                    gap: 12,
-                    marginTop: 16,
-                    paddingTop: 16,
-                    borderTopWidth: 1,
-                    borderTopColor: 'rgba(0, 0, 0, 0.06)',
-                  }}>
-                    <InfoRow label="Rashi" value={selectedProfile.rashi || "Not specified"} />
-                    <InfoRow label="Nakshira" value={selectedProfile.nakshira || "Not specified"} />
-                    <InfoRow label="Gotra/Devak" value={selectedProfile.gotraDevak || "Not specified"} />
-                    <InfoRow label="Mangal" value={selectedProfile.mangal || "Not specified"} />
-                  </View>
-                )}
-              </TouchableOpacity>
-            </View>
-            {/* Action Buttons */}
-            <View style={{ 
-              flexDirection: 'row', 
-              gap: 12,
-              marginTop: 8,
-            }}>
-              {/* Send Interest Button */}
-              <TouchableOpacity
-                onPress={() => {
-                  handleSendInterest(selectedProfile._id);
-                  setSelectedProfile(null);
-                }}
-                disabled={selectedProfile.interestSent}
-                activeOpacity={0.8}
-                style={{
-                  flex: 1,
-                  borderRadius: 14,
-                  overflow: 'hidden',
-                  shadowColor: selectedProfile.interestSent ? COLORS.success : COLORS.primary,
-                  shadowOffset: { width: 0, height: 4 },
-                  shadowOpacity: 0.2,
-                  shadowRadius: 6,
-                  elevation: 3,
-                }}
-              >
-                {selectedProfile.interestSent ? (
-                  <View style={{
-                    backgroundColor: COLORS.success,
-                    paddingVertical: 16,
+                <LinearGradient
+                  colors={getCompatibilityColor(selectedProfile.compatibility)}
+                  style={{
+                    borderRadius: 14,
+                    paddingHorizontal: 14,
+                    paddingVertical: 8,
+                    minWidth: 90,
                     alignItems: 'center',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    gap: 8,
+                  }}
+                >
+                  <Text style={{
+                    fontSize: 12,
+                    fontWeight: '800',
+                    color: '#FFF',
+                    letterSpacing: 0.5,
                   }}>
-                    <Ionicons name="checkmark-circle" size={18} color="#FFF" />
-                    <Text style={{ 
-                      color: '#FFF',
-                      fontSize: 15,
-                      fontWeight: '600',
+                    {selectedProfile.compatibility}% Match
+                  </Text>
+                </LinearGradient>
+              </View>
+
+              {/* Verification Badge */}
+              {selectedProfile.isVerified && (
+                <View style={{
+                  position: 'absolute',
+                  bottom: 36,
+                  right: 36,
+                  backgroundColor: '#FFF',
+                  borderRadius: 16,
+                  padding: 8,
+                  shadowColor: COLORS.success,
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 4,
+                  elevation: 3,
+                }}>
+                  <Ionicons name="checkmark-circle" size={22} color={COLORS.success} />
+                </View>
+              )}
+
+              {/* Name and Details Card */}
+              <View style={{
+                position: 'absolute',
+                bottom: 36,
+                left: 36,
+                right: 100,
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                borderRadius: 16,
+                padding: 12,
+              }}>
+                <Text style={{
+                  fontSize: 18,
+                  fontWeight: '700',
+                  color: '#FFF',
+                  marginBottom: 6,
+                }}>
+                  {hasSubscription ? selectedProfile.name : maskFirstName(selectedProfile.name)}
+                </Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 12 }}>
+                    <Ionicons name="calendar-outline" size={14} color="rgba(255,255,255,0.8)" />
+                    <Text style={{
+                      fontSize: 12,
+                      color: 'rgba(255,255,255,0.9)',
+                      fontWeight: '500',
+                      marginLeft: 4,
                     }}>
-                      Interest Sent
+                      {selectedProfile.age} years
                     </Text>
                   </View>
-                ) : (
-                  <LinearGradient
-                    colors={COLORS.gradientPrimary}
-                    style={{
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Ionicons name="location-outline" size={14} color="rgba(255,255,255,0.8)" />
+                    <Text style={{
+                      fontSize: 12,
+                      color: 'rgba(255,255,255,0.9)',
+                      fontWeight: '500',
+                      marginLeft: 4,
+                    }}>
+                      {selectedProfile.currentCity}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+
+            {/* Content Sections */}
+            <View style={{ paddingHorizontal: 20, paddingBottom: 40, paddingTop: 10 }}>
+              {/* Basic Information */}
+              <View style={{
+                backgroundColor: '#FFF',
+                borderRadius: 16,
+                marginBottom: 16,
+                overflow: 'hidden',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                elevation: 2,
+              }}>
+                <TouchableOpacity
+                  onPress={() => toggleSection('basic')}
+                  activeOpacity={0.8}
+                  style={{
+                    padding: 20,
+                  }}
+                >
+                  <View style={{ 
+                    flexDirection: 'row', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                  }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <View style={{
+                        backgroundColor: `${COLORS.primary}15`,
+                        borderRadius: 12,
+                        padding: 10,
+                        marginRight: 12,
+                      }}>
+                        <Ionicons name="person-outline" size={20} color={COLORS.primary} />
+                      </View>
+                      <Text style={{
+                        fontSize: 17,
+                        fontWeight: '600',
+                        color: COLORS.onSurface,
+                      }}>
+                        Basic Information
+                      </Text>
+                    </View>
+                    <Ionicons 
+                      name={expandedSections.basic ? "chevron-up" : "chevron-down"} 
+                      size={20} 
+                      color={COLORS.onSurfaceVariant} 
+                    />
+                  </View>
+
+                  {expandedSections.basic && (
+                    <View style={{ 
+                      gap: 12,
+                      marginTop: 16,
+                      paddingTop: 16,
+                      borderTopWidth: 1,
+                      borderTopColor: 'rgba(0, 0, 0, 0.06)',
+                    }}>
+                      <InfoRow label="Age" value={`${selectedProfile.age} years`} />
+                      <InfoRow label="Location" value={selectedProfile.currentCity} />
+                      <InfoRow label="Education" value={selectedProfile.education} />
+                      <InfoRow label="Caste" value={selectedProfile.caste} />
+                      <InfoRow label="Last Active" value={selectedProfile.lastActive} />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              {/* Professional Section */}
+              <View style={{
+                backgroundColor: '#FFF',
+                borderRadius: 16,
+                marginBottom: 16,
+                overflow: 'hidden',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                elevation: 2,
+              }}>
+                <TouchableOpacity
+                  onPress={() => toggleSection('professional')}
+                  activeOpacity={0.8}
+                  style={{
+                    padding: 20,
+                  }}
+                >
+                  <View style={{ 
+                    flexDirection: 'row', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                  }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <View style={{
+                        backgroundColor: `${COLORS.secondary}15`,
+                        borderRadius: 12,
+                        padding: 10,
+                        marginRight: 12,
+                      }}>
+                        <Ionicons name="briefcase-outline" size={20} color={COLORS.secondary} />
+                      </View>
+                      <Text style={{
+                        fontSize: 17,
+                        fontWeight: '600',
+                        color: COLORS.onSurface,
+                      }}>
+                        Professional
+                      </Text>
+                    </View>
+                    <Ionicons 
+                      name={expandedSections.professional ? "chevron-up" : "chevron-down"} 
+                      size={20} 
+                      color={COLORS.onSurfaceVariant} 
+                    />
+                  </View>
+
+                  {expandedSections.professional && (
+                    <View style={{ 
+                      gap: 12,
+                      marginTop: 16,
+                      paddingTop: 16,
+                      borderTopWidth: 1,
+                      borderTopColor: 'rgba(0, 0, 0, 0.06)',
+                    }}>
+                      <InfoRow label="Occupation" value={selectedProfile.occupation || "Not specified"} />
+                      <InfoRow label="Company" value={selectedProfile.company || "Not specified"} />
+                      <InfoRow label="Annual Income" value={selectedProfile.annualIncome || "Not specified"} />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              {/* Family Section */}
+              <View style={{
+                backgroundColor: '#FFF',
+                borderRadius: 16,
+                marginBottom: 16,
+                overflow: 'hidden',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                elevation: 2,
+              }}>
+                <TouchableOpacity
+                  onPress={() => toggleSection('family')}
+                  activeOpacity={0.8}
+                  style={{
+                    padding: 20,
+                  }}
+                >
+                  <View style={{ 
+                    flexDirection: 'row', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                  }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <View style={{
+                        backgroundColor: `${COLORS.accent}15`,
+                        borderRadius: 12,
+                        padding: 10,
+                        marginRight: 12,
+                      }}>
+                        <Ionicons name="people-outline" size={20} color={COLORS.accent} />
+                      </View>
+                      <Text style={{
+                        fontSize: 17,
+                        fontWeight: '600',
+                        color: COLORS.onSurface,
+                      }}>
+                        Family
+                      </Text>
+                    </View>
+                    <Ionicons 
+                      name={expandedSections.family ? "chevron-up" : "chevron-down"} 
+                      size={20} 
+                      color={COLORS.onSurfaceVariant} 
+                    />
+                  </View>
+
+                  {expandedSections.family && (
+                    <View style={{ 
+                      gap: 12,
+                      marginTop: 16,
+                      paddingTop: 16,
+                      borderTopWidth: 1,
+                      borderTopColor: 'rgba(0, 0, 0, 0.06)',
+                    }}>
+                      <InfoRow label="Father Name" value={selectedProfile.fatherName || "Not specified"} />
+                      <InfoRow label="Mother Name" value={selectedProfile.mother || "Not specified"} />
+                      <InfoRow label="Siblings" value={selectedProfile.motherOccupation || "Not specified"} />
+                      <InfoRow label="Brother" value={selectedProfile.brothers || "Not specified"} />
+                      <InfoRow label="Sisters" value={selectedProfile.sisters || "Not specified"} />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              {/* Horoscope Section */}
+              <View style={{
+                backgroundColor: '#FFF',
+                borderRadius: 16,
+                marginBottom: 16,
+                overflow: 'hidden',
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 0.05,
+                shadowRadius: 5,
+                elevation: 2,
+              }}>
+                <TouchableOpacity
+                  onPress={() => toggleSection('astrological')}
+                  activeOpacity={0.8}
+                  style={{
+                    padding: 20,
+                  }}
+                >
+                  <View style={{ 
+                    flexDirection: 'row', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center',
+                  }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <View style={{
+                        backgroundColor: `${COLORS.gold}15`,
+                        borderRadius: 12,
+                        padding: 10,
+                        marginRight: 12,
+                      }}>
+                        <Ionicons name="star-outline" size={20} color={COLORS.gold} />
+                      </View>
+                      <Text style={{
+                        fontSize: 17,
+                        fontWeight: '600',
+                        color: COLORS.onSurface,
+                      }}>
+                        Horoscope
+                      </Text>
+                    </View>
+                    <Ionicons 
+                      name={expandedSections.astrological ? "chevron-up" : "chevron-down"} 
+                      size={20} 
+                      color={COLORS.onSurfaceVariant} 
+                    />
+                  </View>
+
+                  {expandedSections.astrological && (
+                    <View style={{ 
+                      gap: 12,
+                      marginTop: 16,
+                      paddingTop: 16,
+                      borderTopWidth: 1,
+                      borderTopColor: 'rgba(0, 0, 0, 0.06)',
+                    }}>
+                      <InfoRow label="Rashi" value={selectedProfile.rashi || "Not specified"} />
+                      <InfoRow label="Nakshira" value={selectedProfile.nakshira || "Not specified"} />
+                      <InfoRow label="Gotra/Devak" value={selectedProfile.gotraDevak || "Not specified"} />
+                      <InfoRow label="Mangal" value={selectedProfile.mangal || "Not specified"} />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              </View>
+
+              {/* Action Buttons */}
+              <View style={{ 
+                flexDirection: 'row', 
+                gap: 12,
+                marginTop: 8,
+              }}>
+                {/* Send Interest Button */}
+                <TouchableOpacity
+                  onPress={() => {
+                    handleSendInterest(selectedProfile._id);
+                    setSelectedProfile(null);
+                  }}
+                  disabled={selectedProfile.interestSent}
+                  activeOpacity={0.8}
+                  style={{
+                    flex: 1,
+                    borderRadius: 14,
+                    overflow: 'hidden',
+                    shadowColor: selectedProfile.interestSent ? COLORS.success : COLORS.primary,
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 6,
+                    elevation: 3,
+                  }}
+                >
+                  {selectedProfile.interestSent ? (
+                    <View style={{
+                      backgroundColor: COLORS.success,
                       paddingVertical: 16,
                       alignItems: 'center',
                       flexDirection: 'row',
                       justifyContent: 'center',
                       gap: 8,
-                    }}
-                  >
-                    <Ionicons name="heart" size={18} color="#FFF" />
-                    <Text style={{ 
-                      color: '#FFF',
-                      fontSize: 15,
-                      fontWeight: '600',
                     }}>
-                      Send Interest
-                    </Text>
-                  </LinearGradient>
-                )}
-              </TouchableOpacity>
+                      <Ionicons name="checkmark-circle" size={18} color="#FFF" />
+                      <Text style={{ 
+                        color: '#FFF',
+                        fontSize: 15,
+                        fontWeight: '600',
+                      }}>
+                        Interest Sent
+                      </Text>
+                    </View>
+                  ) : (
+                    <LinearGradient
+                      colors={COLORS.gradientPrimary}
+                      style={{
+                        paddingVertical: 16,
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        gap: 8,
+                      }}
+                    >
+                      <Ionicons name="heart" size={18} color="#FFF" />
+                      <Text style={{ 
+                        color: '#FFF',
+                        fontSize: 15,
+                        fontWeight: '600',
+                      }}>
+                        Send Interest
+                      </Text>
+                    </LinearGradient>
+                  )}
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    )}
-  </Modal>
-);
+          </ScrollView>
+        </SafeAreaView>
+      )}
+    </Modal>
+  );
 
-// Helper component for info rows
-const InfoRow = ({ label, value }) => (
-  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-    <Text style={{ fontSize: 15, color: COLORS.onSurfaceVariant, fontWeight: '500' }}>
-      {label}
-    </Text>
-    <Text style={{ fontSize: 15, color: COLORS.onSurface, fontWeight: '500' }}>
-      {value}
-    </Text>
-  </View>
-);
-
+  // Helper component for info rows
+  const InfoRow = ({ label, value }) => (
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={{ fontSize: 15, color: COLORS.onSurfaceVariant, fontWeight: '500' }}>
+        {label}
+      </Text>
+      <Text style={{ fontSize: 15, color: COLORS.onSurface, fontWeight: '500' }}>
+        {value}
+      </Text>
+    </View>
+  );
 
   // Quick Filters Modal
-// Quick Filters Modal
-const renderQuickFiltersModal = () => (
-  <Modal
-    visible={showQuickFilters}
-    animationType="slide"
-    presentationStyle="pageSheet"
-    onRequestClose={() => setShowQuickFilters(false)}
-  >
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
-      <StatusBar barStyle="dark-content" />
-      
-      {/* Enhanced Header with Gradient Backdrop */}
-      <Animated.View
-        animation="fadeInDown"
-        duration={300}
-        style={{
+  const renderQuickFiltersModal = () => (
+    <Modal
+      visible={showQuickFilters}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={() => setShowQuickFilters(false)}
+    >
+      <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.background }}>
+        <StatusBar barStyle="dark-content" />
+        
+        {/* Enhanced Header with Gradient Backdrop */}
+        <View style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -1722,487 +1697,466 @@ const renderQuickFiltersModal = () => (
           shadowOpacity: 0.08,
           shadowRadius: 8,
           elevation: 4,
-        }}
-      >
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-          <View style={{
-            backgroundColor: COLORS.primary + '15',
-            borderRadius: 12,
-            padding: 8,
-          }}>
-            <Ionicons name="filter" size={20} color={COLORS.primary} />
+        }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+            <View style={{
+              backgroundColor: COLORS.primary + '15',
+              borderRadius: 12,
+              padding: 8,
+            }}>
+              <Ionicons name="filter" size={20} color={COLORS.primary} />
+            </View>
+            <Text style={{
+              fontSize: 28,
+              fontWeight: '800',
+              color: COLORS.onSurface,
+              letterSpacing: -0.8,
+            }}>
+              Quick Filters
+            </Text>
           </View>
-          <Text style={{
-            fontSize: 28,
-            fontWeight: '800',
-            color: COLORS.onSurface,
-            letterSpacing: -0.8,
-            fontFamily: 'System',
-          }}>
-            Quick Filters
-          </Text>
-        </View>
-        
-        <TouchableOpacity
-          onPress={() => setShowQuickFilters(false)}
-          activeOpacity={0.7}
-          style={{
-            backgroundColor: COLORS.surfaceContainer + '60',
-            borderRadius: 20,
-            padding: 12,
-            shadowColor: COLORS.onSurface,
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.12,
-            shadowRadius: 6,
-            elevation: 3,
-            borderWidth: 1,
-            borderColor: COLORS.outline + '20',
-          }}
-        >
-          <Ionicons name="close" size={20} color={COLORS.onSurfaceVariant} />
-        </TouchableOpacity>
-      </Animated.View>
-
-      <ScrollView 
-        style={{ flex: 1 }} 
-        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 80 }}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Filter Cards Container */}
-        <View style={{ paddingTop: 16 }}>
           
-          {/* Toggle Filters Row */}
-          <View style={{ 
-            flexDirection: 'row', 
-            gap: 12, 
-            marginBottom: 20,
-            flexWrap: 'wrap'
-          }}>
-            {[
-              { key: 'withPhoto', icon: 'image-outline', label: 'Photo', delay: 50 },
-              { key: 'verified', icon: 'shield-checkmark-outline', label: 'Verified', delay: 100 },
-              { key: 'activeRecently', icon: 'flash-outline', label: 'Active', delay: 150 },
-              { key: 'sameCity', icon: 'location-outline', label: 'Same City', delay: 200 },
-            ].map((filter) => (
-              <Animated.View
-                key={filter.key}
-                animation="fadeInUp"
-                duration={400}
-                delay={filter.delay}
-                style={{ flex: 1, minWidth: '40%' }}
-              >
-                <TouchableOpacity
-                  onPress={() =>
-                    setQuickFilters((prev) => ({
-                      ...prev,
-                      [filter.key]: prev[filter.key] === null ? true : null,
-                    }))
-                  }
-                  activeOpacity={0.8}
-                  style={{
-                    backgroundColor: quickFilters[filter.key] 
-                      ? COLORS.primary + '20' 
-                      : COLORS.surfaceContainer,
-                    borderRadius: 16,
-                    padding: 16,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: 80,
-                    borderWidth: 2,
-                    borderColor: quickFilters[filter.key] 
-                      ? COLORS.primary + '40' 
-                      : COLORS.outline + '15',
-                    shadowColor: COLORS.onSurface,
-                    shadowOffset: { width: 0, height: 3 },
-                    shadowOpacity: quickFilters[filter.key] ? 0.2 : 0.08,
-                    shadowRadius: 8,
-                    elevation: quickFilters[filter.key] ? 4 : 2,
-                    transform: [{ scale: quickFilters[filter.key] ? 1.02 : 1 }],
-                  }}
+          <TouchableOpacity
+            onPress={() => setShowQuickFilters(false)}
+            activeOpacity={0.7}
+            style={{
+              backgroundColor: COLORS.surfaceContainer + '60',
+              borderRadius: 20,
+              padding: 12,
+              shadowColor: COLORS.onSurface,
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.12,
+              shadowRadius: 6,
+              elevation: 3,
+              borderWidth: 1,
+              borderColor: COLORS.outline + '20',
+            }}
+          >
+            <Ionicons name="close" size={20} color={COLORS.onSurfaceVariant} />
+          </TouchableOpacity>
+        </View>
+
+        <ScrollView 
+          style={{ flex: 1 }} 
+          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 80 }}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Filter Cards Container */}
+          <View style={{ paddingTop: 16 }}>
+            
+            {/* Toggle Filters Row */}
+            <View style={{ 
+              flexDirection: 'row', 
+              gap: 12, 
+              marginBottom: 20,
+              flexWrap: 'wrap'
+            }}>
+              {[
+                { key: 'withPhoto', icon: 'image-outline', label: 'Photo', delay: 50 },
+                { key: 'verified', icon: 'shield-checkmark-outline', label: 'Verified', delay: 100 },
+                { key: 'activeRecently', icon: 'flash-outline', label: 'Active', delay: 150 },
+                { key: 'sameCity', icon: 'location-outline', label: 'Same City', delay: 200 },
+              ].map((filter) => (
+                <Reanimated.View
+                  key={filter.key}
+                  entering={FadeIn.delay(filter.delay).duration(400)}
+                  style={{ flex: 1, minWidth: '40%' }}
                 >
-                  <Ionicons 
-                    name={filter.icon} 
-                    size={24} 
-                    color={quickFilters[filter.key] ? COLORS.primary : COLORS.onSurfaceVariant}
-                    style={{ marginBottom: 6 }}
-                  />
-                  <Text style={{
-                    fontSize: 13,
-                    fontWeight: '600',
-                    color: quickFilters[filter.key] ? COLORS.primary : COLORS.onSurfaceVariant,
-                    textAlign: 'center',
-                    fontFamily: 'System',
-                  }}>
-                    {filter.label}
-                  </Text>
-                  
-                  {/* Active Indicator */}
-                  {quickFilters[filter.key] && (
-                    <View style={{
-                      position: 'absolute',
-                      top: 8,
-                      right: 8,
-                      backgroundColor: COLORS.primary,
-                      borderRadius: 8,
-                      width: 16,
-                      height: 16,
+                  <TouchableOpacity
+                    onPress={() =>
+                      setQuickFilters((prev) => ({
+                        ...prev,
+                        [filter.key]: prev[filter.key] === null ? true : null,
+                      }))
+                    }
+                    activeOpacity={0.8}
+                    style={{
+                      backgroundColor: quickFilters[filter.key] 
+                        ? COLORS.primary + '20' 
+                        : COLORS.surfaceContainer,
+                      borderRadius: 16,
+                      padding: 16,
                       alignItems: 'center',
                       justifyContent: 'center',
-                    }}>
-                      <Ionicons name="checkmark" size={10} color={COLORS.background} />
-                    </View>
-                  )}
-                </TouchableOpacity>
-              </Animated.View>
-            ))}
-          </View>
-
-          {/* Age Range Section */}
-          <Animated.View
-            animation="fadeInUp"
-            duration={400}
-            delay={250}
-            style={{
-              backgroundColor: COLORS.surfaceContainer,
-              borderRadius: 20,
-              padding: 24,
-              marginBottom: 20,
-              shadowColor: COLORS.onSurface,
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.1,
-              shadowRadius: 12,
-              elevation: 3,
-              borderWidth: 1,
-              borderColor: COLORS.outline + '15',
-            }}
-          >
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center', 
-              marginBottom: 20,
-              paddingBottom: 16,
-              borderBottomWidth: 1,
-              borderBottomColor: COLORS.outline + '20',
-            }}>
-              <View style={{
-                backgroundColor: COLORS.primary + '15',
-                borderRadius: 12,
-                padding: 10,
-                marginRight: 16,
-              }}>
-                <Ionicons name="calendar-outline" size={22} color={COLORS.primary} />
-              </View>
-              <Text style={{
-                fontSize: 20,
-                fontWeight: '700',
-                color: COLORS.onSurface,
-                fontFamily: 'System',
-                letterSpacing: -0.3,
-              }}>
-                Age Range
-              </Text>
-            </View>
-            
-            <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center' }}>
-              <View style={{ flex: 1 }}>
-                <Text style={{
-                  fontSize: 14,
-                  fontWeight: '600',
-                  color: COLORS.onSurfaceVariant,
-                  marginBottom: 8,
-                  fontFamily: 'System',
-                }}>
-                  Min Age
-                </Text>
-                <TextInput
-                  value={quickFilters.ageRange[0]?.toString() || ""}
-                  onChangeText={(text) => {
-                    const value = text ? parseInt(text) : null;
-                    setQuickFilters((prev) => ({
-                      ...prev,
-                      ageRange: [value, prev.ageRange[1]],
-                    }));
-                  }}
-                  placeholder="18"
-                  placeholderTextColor={COLORS.onSurfaceVariant + '80'}
-                  keyboardType="numeric"
-                  style={{
-                    backgroundColor: COLORS.surfaceContainerHigh,
-                    borderRadius: 16,
-                    paddingVertical: 16,
-                    paddingHorizontal: 20,
-                    fontSize: 16,
-                    color: COLORS.onSurface,
-                    borderWidth: 2,
-                    borderColor: COLORS.outline + '30',
-                    fontFamily: 'System',
-                    fontWeight: '600',
-                    textAlign: 'center',
-                  }}
-                />
-              </View>
-              
-              <View style={{
-                backgroundColor: COLORS.primary + '20',
-                borderRadius: 12,
-                padding: 8,
-                marginTop: 22,
-              }}>
-                <Text style={{ 
-                  fontSize: 18, 
-                  color: COLORS.primary, 
-                  fontWeight: '700',
-                  fontFamily: 'System',
-                }}>
-                  to
-                </Text>
-              </View>
-              
-              <View style={{ flex: 1 }}>
-                <Text style={{
-                  fontSize: 14,
-                  fontWeight: '600',
-                  color: COLORS.onSurfaceVariant,
-                  marginBottom: 8,
-                  fontFamily: 'System',
-                }}>
-                  Max Age
-                </Text>
-                <TextInput
-                  value={quickFilters.ageRange[1]?.toString() || ""}
-                  onChangeText={(text) => {
-                    const value = text ? parseInt(text) : null;
-                    setQuickFilters(prev => ({
-                      ...prev,
-                      ageRange: [prev.ageRange[0], value],
-                    }));
-                  }}
-                  placeholder="65"
-                  placeholderTextColor={COLORS.onSurfaceVariant + '80'}
-                  keyboardType="numeric"
-                  style={{
-                    backgroundColor: COLORS.surfaceContainerHigh,
-                    borderRadius: 16,
-                    paddingVertical: 16,
-                    paddingHorizontal: 20,
-                    fontSize: 16,
-                    color: COLORS.onSurface,
-                    borderWidth: 2,
-                    borderColor: COLORS.outline + '30',
-                    fontFamily: 'System',
-                    fontWeight: '600',
-                    textAlign: 'center',
-                  }}
-                />
-              </View>
-            </View>
-          </Animated.View>
-
-          {/* Education Section */}
-          <Animated.View
-            animation="fadeInUp"
-            duration={400}
-            delay={300}
-            style={{
-              backgroundColor: COLORS.surfaceContainer,
-              borderRadius: 20,
-              padding: 24,
-              marginBottom: 30,
-              shadowColor: COLORS.onSurface,
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 0.1,
-              shadowRadius: 12,
-              elevation: 3,
-              borderWidth: 1,
-              borderColor: COLORS.outline + '15',
-            }}
-          >
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center', 
-              marginBottom: 20,
-              paddingBottom: 16,
-              borderBottomWidth: 1,
-              borderBottomColor: COLORS.outline + '20',
-            }}>
-              <View style={{
-                backgroundColor: COLORS.primary + '15',
-                borderRadius: 12,
-                padding: 10,
-                marginRight: 16,
-              }}>
-                <Ionicons name="school-outline" size={22} color={COLORS.primary} />
-              </View>
-              <Text style={{
-                fontSize: 20,
-                fontWeight: '700',
-                color: COLORS.onSurface,
-                fontFamily: 'System',
-                letterSpacing: -0.3,
-              }}>
-                Education Level
-              </Text>
-            </View>
-            
-            <View style={{ gap: 12 }}>
-              {[
-                { value: "High School", icon: "library-outline" },
-                { value: "Bachelor's Degree", icon: "ribbon-outline" },
-                { value: "Master's Degree", icon: "trophy-outline" },
-                { value: "Doctorate", icon: "medal-outline" }
-              ].map((edu, index) => (
-                <TouchableOpacity
-                  key={edu.value}
-                  onPress={() =>
-                    setQuickFilters((prev) => ({
-                      ...prev,
-                      education: prev.education === edu.value ? null : edu.value,
-                    }))
-                  }
-                  activeOpacity={0.8}
-                  style={{
-                    backgroundColor: quickFilters.education === edu.value 
-                      ? COLORS.primary + '20' 
-                      : COLORS.surfaceContainerHigh,
-                    borderRadius: 16,
-                    paddingHorizontal: 20,
-                    paddingVertical: 16,
-                    borderWidth: 2,
-                    borderColor: quickFilters.education === edu.value 
-                      ? COLORS.primary + '40' 
-                      : COLORS.outline + '20',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    shadowColor: COLORS.onSurface,
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: quickFilters.education === edu.value ? 0.15 : 0.05,
-                    shadowRadius: 6,
-                    elevation: quickFilters.education === edu.value ? 3 : 1,
-                    transform: [{ scale: quickFilters.education === edu.value ? 1.02 : 1 }],
-                  }}
-                >
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+                      minHeight: 80,
+                      borderWidth: 2,
+                      borderColor: quickFilters[filter.key] 
+                        ? COLORS.primary + '40' 
+                        : COLORS.outline + '15',
+                      shadowColor: COLORS.onSurface,
+                      shadowOffset: { width: 0, height: 3 },
+                      shadowOpacity: quickFilters[filter.key] ? 0.2 : 0.08,
+                      shadowRadius: 8,
+                      elevation: quickFilters[filter.key] ? 4 : 2,
+                      transform: [{ scale: quickFilters[filter.key] ? 1.02 : 1 }],
+                    }}
+                  >
                     <Ionicons 
-                      name={edu.icon} 
-                      size={20} 
-                      color={quickFilters.education === edu.value ? COLORS.primary : COLORS.onSurfaceVariant} 
+                      name={filter.icon} 
+                      size={24} 
+                      color={quickFilters[filter.key] ? COLORS.primary : COLORS.onSurfaceVariant}
+                      style={{ marginBottom: 6 }}
                     />
                     <Text style={{
-                      fontSize: 16,
-                      color: quickFilters.education === edu.value ? COLORS.primary : COLORS.onSurface,
+                      fontSize: 13,
                       fontWeight: '600',
-                      fontFamily: 'System',
+                      color: quickFilters[filter.key] ? COLORS.primary : COLORS.onSurfaceVariant,
+                      textAlign: 'center',
                     }}>
-                      {edu.value}
+                      {filter.label}
                     </Text>
-                  </View>
-                  
-                  {quickFilters.education === edu.value && (
-                    <View style={{
-                      backgroundColor: COLORS.primary,
-                      borderRadius: 10,
-                      padding: 4,
-                    }}>
-                      <Ionicons name="checkmark" size={14} color={COLORS.background} />
-                    </View>
-                  )}
-                </TouchableOpacity>
+                    
+                    {/* Active Indicator */}
+                    {quickFilters[filter.key] && (
+                      <View style={{
+                        position: 'absolute',
+                        top: 8,
+                        right: 8,
+                        backgroundColor: COLORS.primary,
+                        borderRadius: 8,
+                        width: 16,
+                        height: 16,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        <Ionicons name="checkmark" size={10} color={COLORS.background} />
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                </Reanimated.View>
               ))}
             </View>
-          </Animated.View>
 
-          {/* Action Buttons */}
-          <Animated.View
-            animation="fadeInUp"
-            delay={350}
-            style={{ 
-              flexDirection: 'row', 
-              gap: 16, 
-              alignItems: 'center',
-              paddingBottom: 20,
-            }}
-          >
-            {/* Reset Button */}
-            <TouchableOpacity
-              onPress={() =>
-                setQuickFilters({
-                  withPhoto: null,
-                  verified: null,
-                  activeRecently: null,
-                  sameCity: null,
-                  ageRange: [null, null],
-                  education: null,
-                })
-              }
-              activeOpacity={0.8}
+            {/* Age Range Section */}
+            <Reanimated.View
+              entering={FadeIn.delay(250).duration(400)}
               style={{
-                flex: 1,
-                backgroundColor: COLORS.surfaceContainerHigh,
+                backgroundColor: COLORS.surfaceContainer,
                 borderRadius: 20,
-                paddingVertical: 18,
-                paddingHorizontal: 24,
-                borderWidth: 2,
-                borderColor: COLORS.outline + '30',
+                padding: 24,
+                marginBottom: 20,
                 shadowColor: COLORS.onSurface,
-                shadowOffset: { width: 0, height: 3 },
-                shadowOpacity: 0.1,
-                shadowRadius: 8,
-                elevation: 2,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Text style={{
-                fontSize: 16,
-                fontWeight: '700',
-                color: COLORS.onSurfaceVariant,
-                fontFamily: 'System',
-                letterSpacing: 0.3,
-              }}>
-                Reset All
-              </Text>
-            </TouchableOpacity>
-            
-            {/* Apply Button */}
-            <TouchableOpacity
-              onPress={() => setShowQuickFilters(false)}
-              activeOpacity={0.8}
-              style={{
-                flex: 2,
-                backgroundColor: COLORS.primary,
-                borderRadius: 20,
-                paddingVertical: 18,
-                paddingHorizontal: 32,
-                shadowColor: COLORS.primary,
                 shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.3,
+                shadowOpacity: 0.1,
                 shadowRadius: 12,
-                elevation: 6,
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-                gap: 8,
+                elevation: 3,
+                borderWidth: 1,
+                borderColor: COLORS.outline + '15',
               }}
             >
-              <Ionicons name="checkmark-circle" size={20} color={COLORS.background} />
-              <Text style={{
-                fontSize: 16,
-                fontWeight: '700',
-                color: COLORS.background,
-                fontFamily: 'System',
-                letterSpacing: 0.3,
+              <View style={{ 
+                flexDirection: 'row', 
+                alignItems: 'center', 
+                marginBottom: 20,
+                paddingBottom: 16,
+                borderBottomWidth: 1,
+                borderBottomColor: COLORS.outline + '20',
               }}>
-                Apply Filters
-              </Text>
-            </TouchableOpacity>
-          </Animated.View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  </Modal>
-);
+                <View style={{
+                  backgroundColor: COLORS.primary + '15',
+                  borderRadius: 12,
+                  padding: 10,
+                  marginRight: 16,
+                }}>
+                  <Ionicons name="calendar-outline" size={22} color={COLORS.primary} />
+                </View>
+                <Text style={{
+                  fontSize: 20,
+                  fontWeight: '700',
+                  color: COLORS.onSurface,
+                  letterSpacing: -0.3,
+                }}>
+                  Age Range
+                </Text>
+              </View>
+              
+              <View style={{ flexDirection: 'row', gap: 16, alignItems: 'center' }}>
+                <View style={{ flex: 1 }}>
+                  <Text style={{
+                    fontSize: 14,
+                    fontWeight: '600',
+                    color: COLORS.onSurfaceVariant,
+                    marginBottom: 8,
+                  }}>
+                    Min Age
+                  </Text>
+                  <TextInput
+                    value={quickFilters.ageRange[0]?.toString() || ""}
+                    onChangeText={(text) => {
+                      const value = text ? parseInt(text) : null;
+                      setQuickFilters((prev) => ({
+                        ...prev,
+                        ageRange: [value, prev.ageRange[1]],
+                      }));
+                    }}
+                    placeholder="18"
+                    placeholderTextColor={COLORS.onSurfaceVariant + '80'}
+                    keyboardType="numeric"
+                    style={{
+                      backgroundColor: COLORS.surfaceContainerHigh,
+                      borderRadius: 16,
+                      paddingVertical: 16,
+                      paddingHorizontal: 20,
+                      fontSize: 16,
+                      color: COLORS.onSurface,
+                      borderWidth: 2,
+                      borderColor: COLORS.outline + '30',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                    }}
+                  />
+                </View>
+                
+                <View style={{
+                  backgroundColor: COLORS.primary + '20',
+                  borderRadius: 12,
+                  padding: 8,
+                  marginTop: 22,
+                }}>
+                  <Text style={{ 
+                    fontSize: 18, 
+                    color: COLORS.primary, 
+                    fontWeight: '700',
+                  }}>
+                    to
+                  </Text>
+                </View>
+                
+                <View style={{ flex: 1 }}>
+                  <Text style={{
+                    fontSize: 14,
+                    fontWeight: '600',
+                    color: COLORS.onSurfaceVariant,
+                    marginBottom: 8,
+                  }}>
+                    Max Age
+                  </Text>
+                  <TextInput
+                    value={quickFilters.ageRange[1]?.toString() || ""}
+                    onChangeText={(text) => {
+                      const value = text ? parseInt(text) : null;
+                      setQuickFilters(prev => ({
+                        ...prev,
+                        ageRange: [prev.ageRange[0], value],
+                      }));
+                    }}
+                    placeholder="65"
+                    placeholderTextColor={COLORS.onSurfaceVariant + '80'}
+                    keyboardType="numeric"
+                    style={{
+                      backgroundColor: COLORS.surfaceContainerHigh,
+                      borderRadius: 16,
+                      paddingVertical: 16,
+                      paddingHorizontal: 20,
+                      fontSize: 16,
+                      color: COLORS.onSurface,
+                      borderWidth: 2,
+                      borderColor: COLORS.outline + '30',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                    }}
+                  />
+                </View>
+              </View>
+            </Reanimated.View>
 
+            {/* Education Section */}
+            <Reanimated.View
+              entering={FadeIn.delay(300).duration(400)}
+              style={{
+                backgroundColor: COLORS.surfaceContainer,
+                borderRadius: 20,
+                padding: 24,
+                marginBottom: 30,
+                shadowColor: COLORS.onSurface,
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.1,
+                shadowRadius: 12,
+                elevation: 3,
+                borderWidth: 1,
+                borderColor: COLORS.outline + '15',
+              }}
+            >
+              <View style={{ 
+                flexDirection: 'row', 
+                alignItems: 'center', 
+                marginBottom: 20,
+                paddingBottom: 16,
+                borderBottomWidth: 1,
+                borderBottomColor: COLORS.outline + '20',
+              }}>
+                <View style={{
+                  backgroundColor: COLORS.primary + '15',
+                  borderRadius: 12,
+                  padding: 10,
+                  marginRight: 16,
+                }}>
+                  <Ionicons name="school-outline" size={22} color={COLORS.primary} />
+                </View>
+                <Text style={{
+                  fontSize: 20,
+                  fontWeight: '700',
+                  color: COLORS.onSurface,
+                  letterSpacing: -0.3,
+                }}>
+                  Education Level
+                </Text>
+              </View>
+              
+              <View style={{ gap: 12 }}>
+                {[
+                  { value: "High School", icon: "library-outline" },
+                  { value: "Bachelor's Degree", icon: "ribbon-outline" },
+                  { value: "Master's Degree", icon: "trophy-outline" },
+                  { value: "Doctorate", icon: "medal-outline" }
+                ].map((edu, index) => (
+                  <TouchableOpacity
+                    key={edu.value}
+                    onPress={() =>
+                      setQuickFilters((prev) => ({
+                        ...prev,
+                        education: prev.education === edu.value ? null : edu.value,
+                      }))
+                    }
+                    activeOpacity={0.8}
+                    style={{
+                      backgroundColor: quickFilters.education === edu.value 
+                        ? COLORS.primary + '20' 
+                        : COLORS.surfaceContainerHigh,
+                      borderRadius: 16,
+                      paddingHorizontal: 20,
+                      paddingVertical: 16,
+                      borderWidth: 2,
+                      borderColor: quickFilters.education === edu.value 
+                        ? COLORS.primary + '40' 
+                        : COLORS.outline + '20',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      shadowColor: COLORS.onSurface,
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: quickFilters.education === edu.value ? 0.15 : 0.05,
+                      shadowRadius: 6,
+                      elevation: quickFilters.education === edu.value ? 3 : 1,
+                      transform: [{ scale: quickFilters.education === edu.value ? 1.02 : 1 }],
+                    }}
+                  >
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+                      <Ionicons 
+                        name={edu.icon} 
+                        size={20} 
+                        color={quickFilters.education === edu.value ? COLORS.primary : COLORS.onSurfaceVariant} 
+                      />
+                      <Text style={{
+                        fontSize: 16,
+                        color: quickFilters.education === edu.value ? COLORS.primary : COLORS.onSurface,
+                        fontWeight: '600',
+                      }}>
+                        {edu.value}
+                      </Text>
+                    </View>
+                    
+                    {quickFilters.education === edu.value && (
+                      <View style={{
+                        backgroundColor: COLORS.primary,
+                        borderRadius: 10,
+                        padding: 4,
+                      }}>
+                        <Ionicons name="checkmark" size={14} color={COLORS.background} />
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </Reanimated.View>
+
+            {/* Action Buttons */}
+            <Reanimated.View
+              entering={FadeIn.delay(350)}
+              style={{ 
+                flexDirection: 'row', 
+                gap: 16, 
+                alignItems: 'center',
+                paddingBottom: 20,
+              }}
+            >
+              {/* Reset Button */}
+              <TouchableOpacity
+                onPress={() =>
+                  setQuickFilters({
+                    withPhoto: null,
+                    verified: null,
+                    activeRecently: null,
+                    sameCity: null,
+                    ageRange: [null, null],
+                    education: null,
+                  })
+                }
+                activeOpacity={0.8}
+                style={{
+                  flex: 1,
+                  backgroundColor: COLORS.surfaceContainerHigh,
+                  borderRadius: 20,
+                  paddingVertical: 18,
+                  paddingHorizontal: 24,
+                  borderWidth: 2,
+                  borderColor: COLORS.outline + '30',
+                  shadowColor: COLORS.onSurface,
+                  shadowOffset: { width: 0, height: 3 },
+                  shadowOpacity: 0.1,
+                  shadowRadius: 8,
+                  elevation: 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={{
+                  fontSize: 16,
+                  fontWeight: '700',
+                  color: COLORS.onSurfaceVariant,
+                  letterSpacing: 0.3,
+                }}>
+                  Reset All
+                </Text>
+              </TouchableOpacity>
+              
+              {/* Apply Button */}
+              <TouchableOpacity
+                onPress={() => setShowQuickFilters(false)}
+                activeOpacity={0.8}
+                style={{
+                  flex: 2,
+                  backgroundColor: COLORS.primary,
+                  borderRadius: 20,
+                  paddingVertical: 18,
+                  paddingHorizontal: 32,
+                  shadowColor: COLORS.primary,
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 12,
+                  elevation: 6,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  gap: 8,
+                }}
+              >
+                <Ionicons name="checkmark-circle" size={20} color={COLORS.background} />
+                <Text style={{
+                  fontSize: 16,
+                  fontWeight: '700',
+                  color: COLORS.background,
+                  letterSpacing: 0.3,
+                }}>
+                  Apply Filters
+                </Text>
+              </TouchableOpacity>
+            </Reanimated.View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </Modal>
+  );
 
   // Loading State
   if (checkingSubscription || !isLoaded) {
@@ -2272,7 +2226,7 @@ const renderQuickFiltersModal = () => (
             keyExtractor={(item) => item._id}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ 
-              paddingTop:8,
+              paddingTop: 8,
               paddingBottom: 50,
             }}
             refreshControl={
@@ -2299,15 +2253,17 @@ const renderQuickFiltersModal = () => (
                 paddingHorizontal: 24,
               }}>
                 <Reanimated.View entering={FadeIn.duration(600)}>
-                  <View style={{
-                    backgroundColor: COLORS.surfaceContainer,
-                    borderRadius: 24,
-                    padding: 24,
-                    marginBottom: 24,
-                    alignItems: 'center',
-                  }}>
-                    <Ionicons name="search" size={48} color={COLORS.onSurfaceVariant} />
-                  </View>
+                  <LinearGradient
+                    colors={COLORS.gradientError}
+                    style={{
+                      borderRadius: 24,
+                      padding: 24,
+                      marginBottom: 24,
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Ionicons name="search" size={48} color={COLORS.background} />
+                  </LinearGradient>
                   
                   <Text style={{
                     fontSize: 18,

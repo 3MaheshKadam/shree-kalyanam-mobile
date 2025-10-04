@@ -920,27 +920,40 @@ const SettingsScreen = () => {
       <StatusBar barStyle="light-content" backgroundColor={COLORS.primary} />
 
       {/* Header */}
-      <Header height={180}>
-        <View style={{ alignItems: 'center' }}>
-          <View style={{
-            width: 72,
-            height: 72,
-            backgroundColor: 'rgba(255, 255, 255, 0.2)',
-            borderRadius: 36,
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 16
-          }}>
-            <Ionicons name="settings" size={36} color="#ffffff" />
-          </View>
-          <Text style={{
-            fontSize: 28,
-            fontWeight: '900',
-            color: '#ffffff',
-            letterSpacing: -0.5
-          }}>Settings</Text>
-        </View>
-      </Header>
+<Header height={90}>
+  <View style={{ 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    width: '100%',
+    paddingHorizontal: 24,
+    paddingTop: 10
+  }}>
+    <View style={{
+      width: 40,
+      height: 40,
+      backgroundColor: 'rgba(255, 255, 255, 0.25)',
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: 'rgba(0, 0, 0, 0.1)',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 4,
+      elevation: 2
+    }}>
+      <Ionicons name="settings-outline" size={22} color="#ffffff" />
+    </View>
+    <Text style={{
+      fontSize: 20,
+      fontWeight: '700',
+      color: '#ffffff',
+      letterSpacing: 0.3,
+      textAlign: 'center',
+      flex: 1,
+      marginRight: 40
+    }}>Settings</Text>
+  </View>
+</Header>
 
       {/* Navigation Tabs */}
       <View style={{
