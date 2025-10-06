@@ -14,7 +14,6 @@
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
-
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -34,7 +33,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "514a440c-2c9b-4949-bd92-c266740ee3c0"
+        "projectId": "aadb73ea-b5d2-4416-888f-1c45257cd319"
       }
     }
   }
