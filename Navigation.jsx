@@ -495,7 +495,7 @@ function OnboardingScreen({ setHasSeenOnboarding }) {
               backgroundColor: COLORS.background,
               image: (
                 <Image
-                  source={require("./assets/welcome.png")}
+                  source={require("./assets/welcome.jpeg")}
                   style={{
                     width: screenWidth * 0.8,
                     height: screenWidth * 0.8,

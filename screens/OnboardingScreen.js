@@ -620,7 +620,7 @@ const ONBOARDING_DATA = [
     title: 'Welcome to Shree Kalyanam',
     subtitle: 'Find your perfect life partner',
     description: 'Join thousands of verified profiles and discover meaningful connections that lead to beautiful marriages.',
-    image: require('assets/welcome.png'),
+    image: require('assets/welcome.jpeg'),
     icon: 'heart-circle',
     bgGradient: ["#f87171", "#ef4444"],
     accentColor: COLORS.primary,

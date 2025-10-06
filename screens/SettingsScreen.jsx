@@ -1173,7 +1173,7 @@ const SettingsScreen = () => {
         key: 'rzp_test_YgehxPKjMam2Wr',
         amount: order.amount,
         currency: order.currency,
-        name: 'ShivBandhan Subscription',
+        name: 'ShreeKalyanam Subscription',
         description: plan.name,
         order_id: order.id,
         handler: async (response) => {
