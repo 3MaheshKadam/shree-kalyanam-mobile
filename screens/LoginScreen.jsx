@@ -352,7 +352,7 @@ export default function MatrimonialLoginScreen() {
               <View style={styles.logoContainer}>
                 <View style={styles.logoWrapper}>
                   <Image 
-                    source={require('../assets/logo.png')} 
+                    source={require('../assets/logo.jpeg')} 
                     style={styles.logoImage}
                     resizeMode="contain"
                   />

@@ -12,7 +12,7 @@
     },
     "plugins": [],
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/logo.jpeg",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": [
       "**/*"

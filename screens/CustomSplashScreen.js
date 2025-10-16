@@ -76,7 +76,7 @@
 //           ]}
 //         >
 //           <Image
-//             source={require('../assets/logo.png')}
+//             source={require('../assets/logo.jpeg')}
 //             style={styles.logo}
 //             resizeMode="contain"
 //           />
@@ -216,7 +216,7 @@ const CustomSplashScreen = ({ onFinish }) => {
           ]}
         >
           <Image
-            source={require('../assets/logo.png')}
+            source={require('../assets/logo.jpeg')}
             style={styles.logo}
             resizeMode="contain"
           />
